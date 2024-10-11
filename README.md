@@ -3,7 +3,8 @@
 [![Build Status](https://app.travis-ci.com/catalinsanda/org.openhab.binding.solarman.svg?branch=main)](https://app.travis-ci.com/catalinsanda/org.openhab.binding.solarman)
 
 Binding used to communicate with Solarman (IGEN-Tech) v5 based solar inverter data loggers in direct-mode over the local
-network.
+network (Wifi) or the Solarman RAW based logger (LSE-3) in direct-mode over LAN. Default ist wifi. To use the LAN logger, check RAW LAN Modbus
+in advanced mode.
 More information about the different types of stick loggers is available on the
 [Solarman](https://www.solarmanpv.com/products/data-logger/stick-logger/) site.
 
@@ -42,6 +43,7 @@ a browser (default user/pass: admin/admin) and getting it from the Status page. 
 | inverterType       | text    | The type of inverter connected to the logger            | deye_sg04lp3 | no       | no       |
 | port               | integer | Port of the Solarman logger                             | 8899         | no       | yes      |
 | refreshInterval    | integer | Interval the device is polled in sec.                   | 60           | no       | yes      |
+| RAW LAN Modbus     | boolean | Use raw Modbus for LAN Dongle. Unchecked for Wifi, Checked for LAN.    | false           | no       | yes      |
 | additionalRequests | text    | Additional requests besides the ones in the deffinition | N/A          | no       | yes      |
 
 
