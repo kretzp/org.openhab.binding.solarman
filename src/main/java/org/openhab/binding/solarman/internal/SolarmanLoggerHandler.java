@@ -30,7 +30,9 @@ import org.openhab.binding.solarman.internal.defmodel.InverterDefinition;
 import org.openhab.binding.solarman.internal.defmodel.ParameterItem;
 import org.openhab.binding.solarman.internal.defmodel.Request;
 import org.openhab.binding.solarman.internal.defmodel.Validation;
+import org.openhab.binding.solarman.internal.modbus.ISolarmanProtocol;
 import org.openhab.binding.solarman.internal.modbus.SolarmanLoggerConnector;
+import org.openhab.binding.solarman.internal.modbus.SolarmanRAWProtocol;
 import org.openhab.binding.solarman.internal.modbus.SolarmanV5Protocol;
 import org.openhab.binding.solarman.internal.state.LoggerState;
 import org.openhab.binding.solarman.internal.updater.SolarmanChannelUpdater;
@@ -101,8 +103,9 @@ public class SolarmanLoggerHandler extends BaseThingHandler {
                 logger.debug("Found definition for {}", config.inverterType);
             }
         }
-        SolarmanLoggerConnector solarmanV5Connector = new SolarmanLoggerConnector(config);
-        SolarmanV5Protocol solarmanV5Protocol = new SolarmanV5Protocol(config);
+        SolarmanLoggerConnector solarmanConnector = new SolarmanLoggerConnector(config);
+        // raw = false: Wifi, use V5 Protocol; raw = true: LAN, use RAW Protocol
+        ISolarmanProtocol solarmanProtocol = config.raw?new SolarmanRAWProtocol(config):new SolarmanV5Protocol(config);
 
         List<Request> mergedRequests = (StringUtils.isNotEmpty(config.getAdditionalRequests())) ?
                 mergeRequests(
@@ -123,7 +126,7 @@ public class SolarmanLoggerHandler extends BaseThingHandler {
                     boolean fetchSuccessful = solarmanChannelUpdater.fetchDataFromLogger(
                             mergedRequests,
                             solarmanLoggerConnector,
-                            solarmanV5Protocol,
+                            solarmanProtocol,
                             paramToChannelMapping,
                             loggerState);
 

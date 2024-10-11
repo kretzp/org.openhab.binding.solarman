@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Catalin Sanda - Initial contribution
  */
-public class SolarmanV5Protocol {
+public class SolarmanV5Protocol implements ISolarmanProtocol {
     private final static Logger LOGGER = LoggerFactory.getLogger(SolarmanLoggerHandler.class);
     private final SolarmanLoggerConfiguration solarmanLoggerConfiguration;
 
@@ -23,7 +23,8 @@ public class SolarmanV5Protocol {
         this.solarmanLoggerConfiguration = solarmanLoggerConfiguration;
     }
 
-    public Map<Integer, byte[]> readRegisters(SolarmanLoggerConnection solarmanLoggerConnection, byte mbFunctionCode, int firstReg, int lastReg, Boolean allowLogging) {
+    @Override
+	public Map<Integer, byte[]> readRegisters(SolarmanLoggerConnection solarmanLoggerConnection, byte mbFunctionCode, int firstReg, int lastReg, Boolean allowLogging) {
         byte[] solarmanV5Frame = buildSolarmanV5Frame(mbFunctionCode, firstReg, lastReg);
         byte[] respFrame = solarmanLoggerConnection.sendRequest(solarmanV5Frame, allowLogging);
         if (respFrame.length > 0) {

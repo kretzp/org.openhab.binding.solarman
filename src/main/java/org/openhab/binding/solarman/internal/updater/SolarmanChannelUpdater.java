@@ -5,9 +5,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.solarman.internal.defmodel.ParameterItem;
 import org.openhab.binding.solarman.internal.defmodel.Request;
 import org.openhab.binding.solarman.internal.defmodel.Validation;
+import org.openhab.binding.solarman.internal.modbus.ISolarmanProtocol;
 import org.openhab.binding.solarman.internal.modbus.SolarmanLoggerConnection;
 import org.openhab.binding.solarman.internal.modbus.SolarmanLoggerConnector;
-import org.openhab.binding.solarman.internal.modbus.SolarmanV5Protocol;
 import org.openhab.binding.solarman.internal.state.LoggerState;
 import org.openhab.binding.solarman.internal.typeprovider.ChannelUtils;
 import org.openhab.binding.solarman.internal.util.StreamUtils;
@@ -49,7 +49,7 @@ public class SolarmanChannelUpdater {
 
     public boolean fetchDataFromLogger(List<Request> requests,
                                        SolarmanLoggerConnector solarmanLoggerConnector,
-                                       SolarmanV5Protocol solarmanV5Protocol,
+                                       ISolarmanProtocol solarmanProtocol,
                                        Map<ParameterItem, ChannelUID> paramToChannelMapping,
                                        LoggerState loggerState) {
 
@@ -57,7 +57,7 @@ public class SolarmanChannelUpdater {
             LOGGER.debug("Fetching data from logger");
 
             Map<Integer, byte[]> readRegistersMap = requests.stream()
-                    .map(request -> solarmanV5Protocol.readRegisters(solarmanLoggerConnection,
+                    .map(request -> solarmanProtocol.readRegisters(solarmanLoggerConnection,
                             (byte) request.getMbFunctioncode().intValue(),
                             request.getStart(),
                             request.getEnd(),

@@ -22,19 +22,19 @@ class SolarmanV5ProtocolTest {
     @Mock
     SolarmanLoggerConnection solarmanLoggerConnection;
 
-    private SolarmanV5Protocol solarmanV5Protocol;
+    private ISolarmanProtocol solarmanV5Protocol;
 
     @BeforeEach
     void setUp() {
         SolarmanLoggerConfiguration loggerConfiguration = new SolarmanLoggerConfiguration("192.168.1.1", 8899,
-                "1234567890", "sg04lp3", 60, null);
+                "1234567890", "sg04lp3", 60, false, null);
 
         solarmanV5Protocol = new SolarmanV5Protocol(loggerConfiguration);
     }
 
     @Test
     void testbuildSolarmanV5Frame() {
-        byte[] requestFrame = solarmanV5Protocol.buildSolarmanV5Frame((byte) 0x03, 0x0000, 0x0020);
+        byte[] requestFrame = ((SolarmanV5Protocol)solarmanV5Protocol).buildSolarmanV5Frame((byte) 0x03, 0x0000, 0x0020);
 
         byte[] expectedFrame = {(byte) 0xA5, (byte) 0x17, (byte) 0x00, (byte) 0x10, (byte) 0x45, (byte) 0x00,
                 (byte) 0x00, (byte) 0xD2, (byte) 0x02, (byte) 0x96, (byte) 0x49, (byte) 0x02, (byte) 0x00, (byte) 0x00,

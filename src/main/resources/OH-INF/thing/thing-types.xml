@@ -54,6 +54,12 @@
                 <default>60</default>
                 <advanced>true</advanced>
             </parameter>
+            <parameter name="raw" type="boolean" required="false">
+                <label>RAW LAN Modbus</label>
+                <description>Use raw Modbus for LAN Dongle. Unchecked for Wifi, Checked for LAN.</description>
+                <default>false</default>
+                <advanced>true</advanced>
+            </parameter>
             <parameter name="additionalRequests" type="text" required="false">
                 <label>Additional Requests</label>
                 <description>Additional requests besides the ones defined in the inverter definition.
